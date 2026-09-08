@@ -1,6 +1,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+void uvolni_matici(int **matice, int radky){
+
+    for (int i = 0; i < radky; i++){
+        if (matice[i] != NULL)
+            free(matice[i]);
+    }
+
+    free(matice);
+}
+
 int transponuj_matici(int ***matice, int *radky, int *sloupce){
 
 
@@ -28,13 +38,19 @@ int main(void){
     for (int i = 0; i < radky; i++){
         matice[i] = malloc(sizeof(*matice[i]) * sloupce);
         if (matice[i] == NULL){
-            for (int j = i; j >= 0; j--){
-                free(matice[j]);
-                if (j == 0){
-                    free(matice);
-                    printf("Nespravny vstup.\n");
-                    return 1;
-                }
+            uvolni_matici(matice, i);
+            printf("Nespravny vstup.\n");
+            return 1;
+        }
+    }
+
+    printf("Zadejte prvky matice:\n");
+    for (int i = 0; i < radky; i++){
+        for (int j = 0; j < sloupce; j++){
+            if (scanf("%d", &matice[i][j]) != 1){
+                uvolni_matici(matice, i);
+                printf("Nespravny vstup.\n");
+                return 1;
             }
         }
     }
