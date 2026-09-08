@@ -13,7 +13,30 @@ void uvolni_matici(int **matice, int radky){
 
 int transponuj_matici(int ***matice, int *radky, int *sloupce){
 
+    if (matice == NULL || *radky <= 0 || *sloupce <= 0){
+        uvolni_matici(*matice, *radky);
+        return 0;
+    }
 
+    int temp = *radky;
+    *radky = *sloupce;
+    *sloupce = temp;
+    temp = NULL;
+
+    int **matice_temp = malloc(sizeof(*matice_temp) * *radky);
+    if (matice_temp == NULL){
+        uvolni_matici(*matice, *sloupce);
+        return 0;
+    }
+
+    for (int i = 0; i < radky; i++){
+        matice_temp[i] = malloc(sizeof(*matice_temp[i]) * *sloupce);
+        if (matice_temp[i] == NULL){
+            uvolni_matici(*matice, *sloupce);
+            uvolni_matici(matice_temp, i);
+            return 0;
+        }
+    }
 
 
     return 1;
@@ -69,7 +92,6 @@ int main(void){
         uvolni_matici(matice, radky);
     }
     else {
-
         printf("Nespravny vstup.\n");
         return 1;
     }
