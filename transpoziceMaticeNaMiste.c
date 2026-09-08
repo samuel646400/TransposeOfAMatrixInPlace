@@ -25,7 +25,19 @@ int main(void){
         return 1;
     }
 
-    
+    for (int i = 0; i < radky; i++){
+        matice[i] = malloc(sizeof(*matice[i]) * sloupce);
+        if (matice[i] == NULL){
+            for (int j = i; j >= 0; j--){
+                free(matice[j]);
+                if (j == 0){
+                    free(matice);
+                    printf("Nespravny vstup.\n");
+                    return 1;
+                }
+            }
+        }
+    }
 
 
 
