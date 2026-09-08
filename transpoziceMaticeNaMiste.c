@@ -13,15 +13,12 @@ void uvolni_matici(int **matice, int radky){
 
 int transponuj_matici(int ***matice, int *radky, int *sloupce){
 
-    if (matice == NULL || *radky <= 0 || *sloupce <= 0){
-        uvolni_matici(*matice, *radky);
+    if (matice == NULL || *matice == NULL || radky == NULL || sloupce == NULL || *radky <= 0 || *sloupce <= 0)
         return 0;
-    }
 
     int temp = *radky;
     *radky = *sloupce;
     *sloupce = temp;
-    temp = NULL;
 
     int **matice_temp = malloc(sizeof(*matice_temp) * *radky);
     if (matice_temp == NULL){
@@ -29,7 +26,7 @@ int transponuj_matici(int ***matice, int *radky, int *sloupce){
         return 0;
     }
 
-    for (int i = 0; i < radky; i++){
+    for (int i = 0; i < *radky; i++){
         matice_temp[i] = malloc(sizeof(*matice_temp[i]) * *sloupce);
         if (matice_temp[i] == NULL){
             uvolni_matici(*matice, *sloupce);
@@ -38,9 +35,9 @@ int transponuj_matici(int ***matice, int *radky, int *sloupce){
         }
     }
 
-    for (int i = 0; i < radky; i++){
-        for (int j = 0; j < sloupce; j++)
-            matice_temp[i][j] = *matice[j][i];
+    for (int i = 0; i < *radky; i++){
+        for (int j = 0; j < *sloupce; j++)
+            matice_temp[i][j] = (*matice)[j][i];
     }
 
     uvolni_matici(*matice, *sloupce);
@@ -78,7 +75,7 @@ int main(void){
     for (int i = 0; i < radky; i++){
         for (int j = 0; j < sloupce; j++){
             if (scanf("%d", &matice[i][j]) != 1){
-                uvolni_matici(matice, i);
+                uvolni_matici(matice, radky);
                 printf("Nespravny vstup.\n");
                 return 1;
             }
