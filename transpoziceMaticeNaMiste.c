@@ -55,7 +55,24 @@ int main(void){
         }
     }
 
+    if (transponuj_matici(&matice, &radky, &sloupce)){
+        printf("Transponovana matice:\n");
+        for (int i = 0; i < radky; i++){
+            for (int j = 0; j < sloupce; j++){
+                if (j == sloupce - 1)
+                    printf("%d\n", matice[i][j]);
+                else
+                    printf("%d ", matice[i][j]);
+            }
+        }
 
+        uvolni_matici(matice, radky);
+    }
+    else {
+
+        printf("Nespravny vstup.\n");
+        return 1;
+    }
 
     return 0;
 }
