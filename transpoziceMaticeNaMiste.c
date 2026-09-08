@@ -38,6 +38,13 @@ int transponuj_matici(int ***matice, int *radky, int *sloupce){
         }
     }
 
+    for (int i = 0; i < radky; i++){
+        for (int j = 0; j < sloupce; j++)
+            matice_temp[i][j] = *matice[j][i];
+    }
+
+    uvolni_matici(*matice, *sloupce);
+    *matice = matice_temp;
 
     return 1;
 }
